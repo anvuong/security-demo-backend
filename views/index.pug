@@ -33,6 +33,6 @@ block content
             each task in user.Tasks
               li
                 strong
-                  = task.title
+                  | !{task.title}
                 | &nbsp;
                 a(href="/users/" + user.id + "/tasks/" + task.id + "/destroy",  class="btn btn-xs btn-warning") delete
