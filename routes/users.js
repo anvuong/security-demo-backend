@@ -2,6 +2,7 @@ const { QueryTypes } = require('sequelize');
 var HttpStatus = require('http-status-codes');
 var jwt = require('jsonwebtoken');
 var models  = require('../models');
+var config = require('../config/config');
 var express = require('express');
 var router  = express.Router();
 
@@ -87,7 +88,7 @@ router.post('/login', function (req, res, next) {
   }).then(function(users) {
     const user = Array.isArray(users) && users.length > 0 ? users[0] : null;
     if (user) {
-      jwt.sign(user, 'MY_PRIVATE_KEY', { algorithm: 'HS256' }, function(err, token) {
+      jwt.sign(user, config.tokenSecretKey, { algorithm: 'HS256' }, function(err, token) {
         if (err) {
           console.log(JSON.stringify({ user, err }, null, 2));
           res.status(HttpStatus.INTERNAL_SERVER_ERROR).send('Could not generate token');

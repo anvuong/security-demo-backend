@@ -19,5 +19,6 @@ module.exports = {
       multipleStatements: true
     }
     // use_env_variable: 'DATABASE_URL'
-  }
+  },
+  tokenSecretKey: process.env.TOKEN_SECRET_KEY || 'MY_PRIVATE_KEY',
 };
