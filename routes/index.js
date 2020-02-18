@@ -1,13 +1,14 @@
 var models  = require('../models');
+var auth = require('../middlewares/auth');
 var express = require('express');
 var router  = express.Router();
 
-router.get('/', function(req, res) {
+router.get('/', auth, function(req, res) {
   models.User.findAll({
     include: [ models.Task ]
   }).then(function(users) {
     res.render('index', {
-      title: 'Sequelize: Express Example',
+      title: 'Security Example',
       users: users
     });
   });
