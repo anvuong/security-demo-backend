@@ -18,3 +18,9 @@ h1 {
 ul li {
   padding: 5px;
 }
+
+#notice {
+  padding-top: 10px;
+  color: red;
+  font-size: medium;
+}

@@ -1,0 +1,36 @@
+extends layout
+
+block content
+  .main.container
+    .row
+      .col-md-6.col-md-offset-3
+        h1.display-4.m-b-2 Log In
+        form(id='loginForm' method='POST' action='/users/login')
+          div.form-group
+            label(for='username') Username
+            input.form-control(type='text' id='username' placeholder='Username' name='username')
+          div.form-group
+            label(for='password') Password
+            input.form-control(type='password' id='password' placeholder='Password' name='password')
+          button.btn.btn-primary(type='submit') Log in
+          div
+            label(id='notice')
+
+  script(type='text/javascript').
+    $('#loginForm').submit(function(event) {
+      event.preventDefault();
+      $('#notice').html('');
+      var url = $(this).attr('action');
+      var type = $(this).attr('method');
+      var data = $(this).serialize();
+      $.ajax({ url, type, data }).done(function(response) {
+        const { token } = response;
+        if (token) {
+          localStorage.setItem('token', token);
+        } else {
+          $('#notice').html('No token returned!');
+        }
+      }).fail(function (jqXHR, textStatus, errorThrown) {
+         $('#notice').html(jqXHR.responseText || jqXHR.statusText);
+      });
+    });

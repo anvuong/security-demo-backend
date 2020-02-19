@@ -24,6 +24,10 @@ router.get('/:user_id/destroy', function(req, res) {
   });
 });
 
+router.get('/login', function(req, res) {
+  res.render('login');
+});
+
 router.get('/:user_id', function(req, res, next) {
   models.sequelize.query('SELECT username, u.createdAt FROM `Users` u WHERE id = \'' + req.params.user_id + '\'', {
     type: QueryTypes.SELECT,
