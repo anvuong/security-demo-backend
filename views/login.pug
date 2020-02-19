@@ -30,6 +30,7 @@ block content
         } else {
           $('#notice').html('No token returned!');
         }
+        window.location.href = '/';
       }).fail(function (jqXHR, textStatus, errorThrown) {
          $('#notice').html(jqXHR.responseText || jqXHR.statusText);
       });
