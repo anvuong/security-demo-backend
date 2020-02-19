@@ -88,7 +88,7 @@ router.post('/login', function (req, res, next) {
   }).then(function(users) {
     const user = Array.isArray(users) && users.length > 0 ? users[0] : null;
     if (user) {
-      jwt.sign(user, config.tokenSecretKey, { algorithm: 'HS256' }, function(err, token) {
+      jwt.sign(user, config.tokenSecretKey, { algorithm: 'HS256', expiresIn: '1h' }, function(err, token) {
         if (err) {
           console.log(JSON.stringify({ user, err }, null, 2));
           res.status(HttpStatus.INTERNAL_SERVER_ERROR).send('Could not generate token');
