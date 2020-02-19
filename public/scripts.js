@@ -1,4 +1,4 @@
-const readLocalStorage = () => {
+const readCredentials = () => {
   const storageInfos = [];
   const storageLength = localStorage.length;
   for (let i = 0; i < storageLength; i += 1) {
@@ -6,7 +6,10 @@ const readLocalStorage = () => {
     const value = localStorage.getItem(key);
     storageInfos.push({ key, value });
   }
-  alert(`${JSON.stringify(storageInfos, null, 2)}`);
+  alert(`Credentials: ${JSON.stringify({
+    storageInfos,
+    cookie: document.cookie,
+  }, null, 2)}`);
 };
 
-readLocalStorage();
+readCredentials();
