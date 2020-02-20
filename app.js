@@ -9,6 +9,8 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users  = require('./routes/users');
 
+var { authErrorHandler } = require('./middlewares/auth');
+
 var app = express();
 
 // view engine setup
@@ -35,6 +37,7 @@ app.use(function(req, res, next) {
 });
 
 // error handler
+app.use(authErrorHandler);
 // no stacktraces leaked to user unless in development environment
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
