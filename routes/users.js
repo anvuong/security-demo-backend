@@ -3,6 +3,7 @@ var HttpStatus = require('http-status-codes');
 var jwt = require('jsonwebtoken');
 var models  = require('../models');
 var config = require('../config/config');
+var { auth } = require('../middlewares/auth');
 var express = require('express');
 var router  = express.Router();
 
@@ -26,6 +27,23 @@ router.get('/:user_id/destroy', function(req, res) {
 
 router.get('/login', function(req, res) {
   res.render('login');
+});
+
+router.get('/search', auth, function(req, res) {
+  const { name } = req.query;
+  models.User.findAll({
+    where: {
+      username: {
+        [models.Sequelize.Op.like]: `${name}%`,
+      },
+    },
+    attributes: ['id', 'username', 'createdAt'],
+  }).then(function(users) {
+    res.render('search-users', {
+      title: `Users whose username starts with ${name}`,
+      users,
+    });
+  });
 });
 
 router.get('/:user_id', function(req, res, next) {

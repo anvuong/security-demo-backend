@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  h1 !{title}
+
+  div(class="col-md-4")
+    ol
+      each user in users
+        li
+          strong
+            = user.username
+          ul
+            li
+              | UserId: #{user.id}
+            li
+              | Created at: #{user.createdAt}
