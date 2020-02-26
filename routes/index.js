@@ -7,7 +7,10 @@ router.get('/', auth, function(req, res) {
   models.User.findAll({
     include: [ models.Task ]
   }).then(function(users) {
-    res.render('index', {
+    res
+    .set('Content-Security-Policy', 'script-src \'self\'')
+    .set('Content-Security-Policy', 'script-src code.jquery.com')
+    .render('index', {
       title: 'Security Example',
       users: users
     });
