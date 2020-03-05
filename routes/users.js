@@ -26,7 +26,7 @@ router.get('/:user_id/destroy', function(req, res) {
 });
 
 router.get('/login', function(req, res) {
-  res.render('login');
+  res.set('X-Frame-Options', 'SAMEORIGIN').render('login');
 });
 
 router.get('/search', auth, function(req, res) {

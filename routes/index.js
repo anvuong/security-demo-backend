@@ -10,6 +10,7 @@ router.get('/', auth, function(req, res) {
     res
     .set('Content-Security-Policy', 'script-src \'self\'')
     .set('Content-Security-Policy', 'script-src code.jquery.com')
+    .set('X-Frame-Options', 'SAMEORIGIN')
     .render('index', {
       title: 'Security Example',
       users: users
@@ -17,7 +18,7 @@ router.get('/', auth, function(req, res) {
   });
 }, function(error, req, res, next) {
   if (error && error.isUnauthorized) {
-    res.redirect('/users/login');
+    res.set('X-Frame-Options', 'SAMEORIGIN').redirect('/users/login');
   } else {
     next(error);
   }
