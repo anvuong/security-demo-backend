@@ -9,7 +9,8 @@ var router  = express.Router();
 
 router.post('/create', auth, function(req, res) {
   models.User.create({
-    username: req.body.username
+    username: req.body.username,
+    password: req.body.password
   }).then(function() {
     res.redirect('/');
   });
