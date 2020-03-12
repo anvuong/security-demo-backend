@@ -7,7 +7,7 @@ var { auth } = require('../middlewares/auth');
 var express = require('express');
 var router  = express.Router();
 
-router.post('/create', function(req, res) {
+router.post('/create', auth, function(req, res) {
   models.User.create({
     username: req.body.username
   }).then(function() {
@@ -15,7 +15,17 @@ router.post('/create', function(req, res) {
   });
 });
 
-router.get('/:user_id/destroy', function(req, res) {
+router.get('/:user_id/destroy', auth, function(req, res) {
+  models.User.destroy({
+    where: {
+      id: req.params.user_id
+    }
+  }).then(function() {
+    res.redirect('/');
+  });
+});
+
+router.delete('/:user_id', auth, function(req, res) {
   models.User.destroy({
     where: {
       id: req.params.user_id
@@ -116,7 +126,7 @@ router.post('/login', function (req, res, next) {
           console.log(JSON.stringify({ user, err }, null, 2));
           res.status(HttpStatus.INTERNAL_SERVER_ERROR).send('Could not generate token');
         } else {
-          res.cookie('token', token, { maxAge: expireTimeInSec * 1000 }).send({ token });
+          res.cookie('token', token, { maxAge: expireTimeInSec * 1000, sameSite: false }).send({ token });
         }
       });
     } else {
