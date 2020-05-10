@@ -8,8 +8,8 @@ router.get('/', auth, function(req, res) {
     include: [ models.Task ]
   }).then(function(users) {
     res
-    .set('Content-Security-Policy', 'script-src \'self\'')
-    .set('Content-Security-Policy', 'script-src code.jquery.com')
+    // .set('Content-Security-Policy', 'script-src \'self\'')
+    // .set('Content-Security-Policy', 'script-src code.jquery.com')
     .set('X-Frame-Options', 'SAMEORIGIN')
     .render('index', {
       title: 'Security Example',
